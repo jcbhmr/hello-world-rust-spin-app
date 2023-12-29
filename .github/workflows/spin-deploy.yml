@@ -1,0 +1,25 @@
+name: spin deploy
+on:
+  push:
+    branches: "main"
+    paths-ignore:
+      - .gitignore
+      - LICENSE
+      - README.md
+      - .github/**
+      - "!.github/workflows/wasmer-deploy.yml"
+  workflow_dispatch:
+concurrency: ${{ github.workflow }}
+jobs:
+  wasmer-deploy:
+    environment:
+      name: fermyon-cloud
+      url: https://hello-world-rust-spin-app-vjy7e5ib.fermyon.app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup target add wasm32-wasi
+      - uses: fermyon/actions/spin/setup@v1
+      - uses: fermyon/actions/spin/deploy@v1
+        with:
+          fermyon_token: ${{ secrets.FERMYON_CLOUD_TOKEN }}
