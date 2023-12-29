@@ -7,11 +7,11 @@ on:
       - LICENSE
       - README.md
       - .github/**
-      - "!.github/workflows/wasmer-deploy.yml"
+      - "!.github/workflows/spin-deploy.yml"
   workflow_dispatch:
 concurrency: ${{ github.workflow }}
 jobs:
-  wasmer-deploy:
+  spin-deploy:
     environment:
       name: fermyon-cloud
       url: https://hello-world-rust-spin-app-vjy7e5ib.fermyon.app
